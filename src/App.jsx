@@ -127,7 +127,7 @@ export class App extends Component {
     return (
       <div className={css.App}>
         <Searchbar onSubmit={this.handleSubmit}></Searchbar>
-        {console.log("this.state: ", this.state)}
+        {/* {console.log("this.state: ", this.state)} */}
         {this.state.loading && <Loader />}
         {this.state.error && <p className={css.text}>{this.state.error}</p>}
         {this.state.info && <p className={css.text}>{this.state.info}</p>}

@@ -2,7 +2,7 @@ import css from './imageGallery.module.css';
 import PropTypes from 'prop-types';
 
 export const ImageGallery = ({ images, onClick }) => {
-  console.log('ImageGallery images: ', images);
+  // console.log('ImageGallery images: ', images);
   return (
     <>
       <ul className={css.ImageGallery}>
