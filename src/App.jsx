@@ -17,6 +17,7 @@ export class App extends Component {
       images: INITIAL_STATE.images,
       page: INITIAL_STATE.page,
       pages: INITIAL_STATE.pages,
+      info: INITIAL_STATE.info,
       error: INITIAL_STATE.error,
       more: INITIAL_STATE.more,
       loading: INITIAL_STATE.loading,
@@ -32,6 +33,7 @@ export class App extends Component {
       images: INITIAL_STATE.images,
       page: INITIAL_STATE.page,
       pages: INITIAL_STATE.pages,
+      info: INITIAL_STATE.info,
       error: INITIAL_STATE.error,
     });
   };
@@ -48,6 +50,7 @@ export class App extends Component {
     this.setState({
       query: query,
     });
+    event.target.reset();
   };
 
   async loadImages(query, page) {
@@ -61,12 +64,13 @@ export class App extends Component {
         if (images.length === 0) {
           this.setState({ more: false });
           this.setState({
-            error: `Sorry, there are no images matching ${this.state.query}'. Please try again.`,
+            error: `Sorry, there are no images matching '${this.state.query}'. Please try again.`,
           });
           return;
         }
         this.setState((prevState) => ({
           images: [...prevState.images, ...images],
+          info: `Hurray! We founded ${total} images matching '${this.state.query}'.`,
         }));
         total > this.state.page * 12
           ? this.setState({ more: true })
@@ -125,13 +129,21 @@ export class App extends Component {
         <Searchbar onSubmit={this.handleSubmit}></Searchbar>
         {console.log("this.state: ", this.state)}
         {this.state.loading && <Loader />}
-        {this.state.error && <p>{this.state.error}</p>}
+        {this.state.error && <p className={css.text}>{this.state.error}</p>}
+        {this.state.info && <p className={css.text}>{this.state.info}</p>}
         {!this.state.error && this.state.images.length > 0 && (
-          <ImageGallery images={this.state.images} onClick={this.handleModal}>
-          </ImageGallery>
+          <ImageGallery
+            images={this.state.images}
+            onClick={this.handleModal}></ImageGallery>
         )}
         {this.state.more && <Button onClick={this.handleMore} />}
-        {this.state.modal && <Modal image={this.state.image} tags={this.state.tags} onClick={this.handleModal} />}
+        {this.state.modal && (
+          <Modal
+            image={this.state.image}
+            tags={this.state.tags}
+            onClick={this.handleModal}
+          />
+        )}
       </div>
     );
   }
